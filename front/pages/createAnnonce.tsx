@@ -40,9 +40,6 @@ export default function CreateAnnonceTsx(props: any) {
         )
       };
       await fetch('http://localhost:3000/api/offers', requestOptions)
-      console.log(formData);
-      console.log("email good");
-      
     }
 
   }
