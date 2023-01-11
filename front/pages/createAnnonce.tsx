@@ -4,6 +4,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
+import * as EmailValidator from 'email-validator';
+
 
 
 
@@ -18,9 +20,36 @@ export default function CreateAnnonceTsx(props: any) {
 
 
   }, [])
+  let formData = {
+    companyName: "",
+    email: "",
+    offerName: "",
+    city: "",
+    description: "",
+    types: "",
+  }
+  async function post() {
+
+    if (EmailValidator.validate(formData.email)) {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData
+        )
+      };
+      await fetch('http://localhost:3000/api/offers', requestOptions)
+      console.log(formData);
+      console.log("email good");
+      
+    }
+
+  }
+
 
   return (
-    <div>
+    <div onClick={post}>
       <div>
         <p className='underline text-center my-5 '>Publier une annonce</p>
       </div>
@@ -36,7 +65,7 @@ export default function CreateAnnonceTsx(props: any) {
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
                     nom de l’employeur
                   </label>
-                  <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" />
+                  <input onChange={(e) => formData.companyName = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" />
                   <p className="text-red-500 text-xs italic">
                     Veuillez remplir ce champ.</p>
                 </div>
@@ -44,7 +73,13 @@ export default function CreateAnnonceTsx(props: any) {
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
                     Email
                   </label>
-                  <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Doe" />
+                  <input onChange={(e) => formData.email = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Doe" />
+                </div>
+                <div className="w-full md:w-1/2 px-3">
+                  <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
+                    Description
+                  </label>
+                  <input onChange={(e) => formData.description = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Doe" />
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
@@ -52,7 +87,7 @@ export default function CreateAnnonceTsx(props: any) {
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
                     Intitulé de l’offre
                   </label>
-                  <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="******************" />
+                  <input onChange={(e) => formData.offerName = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="******************" />
                   <p className="text-gray-600 text-xs italic">a fix</p>
                 </div>
               </div>
@@ -61,23 +96,23 @@ export default function CreateAnnonceTsx(props: any) {
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
                     Villes
                   </label>
-                  <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                  <select onChange={(e) => formData.city = e.target.value} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                     {
                       props.villes.map((res: any) => <option id={res.code}>{res.nom}</option>)
                     }
-                   
+
                   </select>
                 </div>
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
-                    Descriptif
+                    Type
                   </label>
                   <div className="relative">
-                    <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                    <select onChange={(e) => formData.types = e.target.value} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
 
-                      <option>CDI</option>
-                      <option>CDD</option>
-                      <option>Intérim ou Stage</option>
+                      <option value={"CDI"} >CDI</option>
+                      <option value={"CDD"}>CDD</option>
+                      <option value={"Intérim ou Stage"}>Intérim ou Stage</option>
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                       <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
@@ -111,6 +146,11 @@ export default function CreateAnnonceTsx(props: any) {
 
 
 export async function getStaticProps() {
+
+
+
+
+
 
   let ville;
 
