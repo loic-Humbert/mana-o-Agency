@@ -2,9 +2,23 @@ import type { NextPage } from 'next'
 
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 
-const CreateAnnonceTsx: NextPage = () => {
+
+
+
+export default function CreateAnnonceTsx(props: any) {
+
+  const [ville, setville] = useState("en chargement")
+
+  useEffect(() => {
+    fetch(`https://geo.api.gouv.fr/departements/987/communes`).then((res) => res.json()).then((data) => setville(data))
+
+
+
+  }, [])
+
   return (
     <div>
       <div>
@@ -15,7 +29,7 @@ const CreateAnnonceTsx: NextPage = () => {
           <div className='text-left my-5  '>
             <p className='underline font-bold'>C'est parti !</p>
           </div>
-          <div className='grid justify-center border-b-2 '>
+          <div className='grid justify-center border-b-2 ' >
             <form className="w-full max-w-lg  ">
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -45,9 +59,14 @@ const CreateAnnonceTsx: NextPage = () => {
               <div className="flex flex-wrap -mx-3 mb-2">
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
-                    Ville
+                    Villes
                   </label>
-                  <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="Albuquerque" />
+                  <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                    {
+                      props.villes.map((res: any) => <option id={res.code}>{res.nom}</option>)
+                    }
+                   
+                  </select>
                 </div>
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
@@ -55,6 +74,7 @@ const CreateAnnonceTsx: NextPage = () => {
                   </label>
                   <div className="relative">
                     <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+
                       <option>CDI</option>
                       <option>CDD</option>
                       <option>Intérim ou Stage</option>
@@ -86,6 +106,22 @@ const CreateAnnonceTsx: NextPage = () => {
     </div>
 
   )
+
 }
 
-export default CreateAnnonceTsx
+
+export async function getStaticProps() {
+
+  let ville;
+
+
+
+  await fetch(`https://geo.api.gouv.fr/departements/987/communes`).then((res) => res.json()).then((data) => ville = data)
+
+
+  return {
+    props: {
+      villes: ville
+    }
+  }
+}
