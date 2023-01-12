@@ -20,7 +20,7 @@ export class OffersService {
   }
 
   findAll() {
-    return `This action returns all offers`;
+    return this.offersRepository.find();
   }
 
   findOne(id: number) {
