@@ -4,12 +4,12 @@ import Header from './header'
 import CreateAnnonce from './createAnnonce'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return
-
-  <div>
-    <Header></Header>
-  </div>
-
+  return (
+    <div>
+      <Header></Header>
+      <Component {...pageProps}></Component>
+    </div>
+  )
 }
 
 export default MyApp
