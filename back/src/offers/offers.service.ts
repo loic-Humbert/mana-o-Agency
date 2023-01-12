@@ -24,7 +24,9 @@ export class OffersService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} offer`;
+    let offerModal = new Offer()
+    offerModal.id = id
+    return this.offersRepository.findOneBy(offerModal);
   }
 
   update(id: number, updateOfferDto: UpdateOfferDto) {
