@@ -1,6 +1,6 @@
 import OfferTsx from "./offer";
 
-export default function offersList(props: any) {
+export default function OffersList(props: any) {
 
     return <div className="mx-24 my-16">
 
