@@ -20,11 +20,13 @@ export class OffersService {
   }
 
   findAll() {
-    return `This action returns all offers`;
+    return this.offersRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} offer`;
+    let offerModal = new Offer()
+    offerModal.id = id
+    return this.offersRepository.findOneBy(offerModal);
   }
 
   update(id: number, updateOfferDto: UpdateOfferDto) {

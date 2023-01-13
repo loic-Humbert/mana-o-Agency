@@ -2,6 +2,10 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Header from './header'
 import CreateAnnonce from './createAnnonce'
+import OffersList from './offers-list'
+import OfferTsx from './offer'
+
+
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
