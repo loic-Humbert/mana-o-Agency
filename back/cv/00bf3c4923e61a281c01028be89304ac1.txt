@@ -1,0 +1,134 @@
+-- Adminer 4.8.1 MySQL 5.5.5-10.7.1-MariaDB-1:10.7.1+maria~focal dump
+
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `batiment`;
+CREATE TABLE `batiment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) NOT NULL,
+  `adresse` varchar(255) NOT NULL,
+  `usage` varchar(255) NOT NULL,
+  `createdAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `communeId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_19c3516541fead0c58ae40d5db2` (`communeId`),
+  CONSTRAINT `FK_19c3516541fead0c58ae40d5db2` FOREIGN KEY (`communeId`) REFERENCES `commune` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
+DROP TABLE IF EXISTS `commune`;
+CREATE TABLE `commune` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) DEFAULT NULL,
+  `code_postal` int(11) NOT NULL,
+  `secteurId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_4551f739dce03abe5c2e88a1c66` (`secteurId`),
+  CONSTRAINT `FK_4551f739dce03abe5c2e88a1c66` FOREIGN KEY (`secteurId`) REFERENCES `secteur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
+DROP TABLE IF EXISTS `compteur`;
+CREATE TABLE `compteur` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `numero_compteur` varchar(255) NOT NULL,
+  `type_energie` enum('Non attribué','électricité','eau','gaz') NOT NULL DEFAULT 'Non attribué',
+  `surface` int(11) NOT NULL,
+  `nombre_personne` int(11) NOT NULL,
+  `emplacement_compteur` varchar(255) NOT NULL,
+  `createdAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `coefficient_conversion` int(11) NOT NULL,
+  `batimentId` int(11) DEFAULT NULL,
+  `sousCompteurId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_3141cd1487e0a9cf598e8bf4627` (`batimentId`),
+  KEY `FK_f9b01fdf6d1aae50d4ed57a648e` (`sousCompteurId`),
+  CONSTRAINT `FK_3141cd1487e0a9cf598e8bf4627` FOREIGN KEY (`batimentId`) REFERENCES `batiment` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_f9b01fdf6d1aae50d4ed57a648e` FOREIGN KEY (`sousCompteurId`) REFERENCES `compteur` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
+DROP TABLE IF EXISTS `djus`;
+CREATE TABLE `djus` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `dju_mois` int(11) NOT NULL,
+  `dju_jour` int(11) NOT NULL,
+  `dju_cumul` int(11) NOT NULL,
+  `createdAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `secteurId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_c9de6a7a65d8b4ee8e945e21348` (`secteurId`),
+  CONSTRAINT `FK_c9de6a7a65d8b4ee8e945e21348` FOREIGN KEY (`secteurId`) REFERENCES `secteur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
+DROP TABLE IF EXISTS `facture`;
+CREATE TABLE `facture` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date_depart` datetime NOT NULL,
+  `date_arrivee` datetime NOT NULL,
+  `consommation` int(11) NOT NULL,
+  `unite` varchar(255) NOT NULL,
+  `cout_total` int(11) NOT NULL,
+  `cout_abonnement` int(11) NOT NULL,
+  `createdAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `djusId` int(11) DEFAULT NULL,
+  `compteurId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `REL_8617e3720562cfc7584380c6e6` (`djusId`),
+  KEY `FK_357812b5a93bfcd5f2b84d76207` (`compteurId`),
+  CONSTRAINT `FK_357812b5a93bfcd5f2b84d76207` FOREIGN KEY (`compteurId`) REFERENCES `compteur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_8617e3720562cfc7584380c6e6d` FOREIGN KEY (`djusId`) REFERENCES `djus` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
+DROP TABLE IF EXISTS `releve`;
+CREATE TABLE `releve` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type_mesure` varchar(255) NOT NULL,
+  `date_depart` datetime NOT NULL,
+  `date_arrivee` datetime NOT NULL,
+  `index_arrive` int(11) NOT NULL,
+  `unite` varchar(255) NOT NULL,
+  `createdAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `compteurId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_596213b0e2dbd809485369e2cb8` (`compteurId`),
+  CONSTRAINT `FK_596213b0e2dbd809485369e2cb8` FOREIGN KEY (`compteurId`) REFERENCES `compteur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
+DROP TABLE IF EXISTS `secteur`;
+CREATE TABLE `secteur` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) NOT NULL,
+  `prenom` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `mot_de_passe` varchar(255) NOT NULL,
+  `createdAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `communeId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_f3d3a059661d374a90e0c696f0d` (`communeId`),
+  CONSTRAINT `FK_f3d3a059661d374a90e0c696f0d` FOREIGN KEY (`communeId`) REFERENCES `commune` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
+-- 2022-11-24 19:11:20

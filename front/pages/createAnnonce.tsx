@@ -5,12 +5,16 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import * as EmailValidator from 'email-validator';
+import OffersList from './offers-list'
+import { useRouter } from 'next/router'
 
 
 
 
 
 export default function CreateAnnonceTsx(props: any) {
+  let router = useRouter();
+
 
   const [ville, setville] = useState("en chargement")
 
@@ -31,6 +35,7 @@ export default function CreateAnnonceTsx(props: any) {
   async function post() {
 
     if (EmailValidator.validate(formData.email)) {
+
       (document.getElementById("emailNotValid") as any).innerHTML = ""
       const requestOptions = {
         method: 'POST',
@@ -40,14 +45,14 @@ export default function CreateAnnonceTsx(props: any) {
         body: JSON.stringify(formData
         )
       };
-      await fetch('http://localhost:3000/api/offers', requestOptions) 
-    }else{
-      (document.getElementById("emailNotValid") as any).innerHTML  = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-      <strong class="font-bold">Holy smokes!</strong>
-      <span class="block sm:inline">Something seriously bad happened.</span>
-      <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-        <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-      </span>
+      await fetch('http://localhost:3000/api/offers', requestOptions).then((res) => {
+        router.push('/offers-list')
+      })
+    } else {
+      (document.getElementById("emailNotValid") as any).innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+
+      <span class="block sm:inline">EMAIL invalide</span>
+
     </div>`
     }
 
@@ -69,27 +74,26 @@ export default function CreateAnnonceTsx(props: any) {
             <p className='underline font-bold'>C'est parti !</p>
           </div>
           <div className='grid justify-center border-b-2 ' >
-            <form className="w-full max-w-lg  ">
+            <form className="w-full  p-5 ">
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
                     nom de l’employeur
                   </label>
-                  <input onChange={(e) => formData.companyName = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" />
-                  <p className="text-red-500 text-xs italic">
-                    Veuillez remplir ce champ.</p>
+                  <input onChange={(e) => formData.companyName = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" />
+
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
                     Email
                   </label>
-                  <input onChange={(e) => formData.email = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Doe" />
+                  <input onChange={(e) => formData.email = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" />
                 </div>
-                <div className="w-full md:w-1/2 px-3">
+                <div className="w-full  px-3">
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
                     Description
                   </label>
-                  <input onChange={(e) => formData.description = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Doe" />
+                  <input onChange={(e) => formData.description = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" />
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
@@ -97,8 +101,7 @@ export default function CreateAnnonceTsx(props: any) {
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
                     Intitulé de l’offre
                   </label>
-                  <input onChange={(e) => formData.offerName = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="******************" />
-                  <p className="text-gray-600 text-xs italic">a fix</p>
+                  <input onChange={(e) => formData.offerName = e.target.value} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" />
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-2">
@@ -141,7 +144,7 @@ export default function CreateAnnonceTsx(props: any) {
           </div>
           <div className='text-right my-5'>
             <button onClick={post} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded w-fit	">
-              Button
+              Valider
             </button>
           </div>
 
