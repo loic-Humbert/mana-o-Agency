@@ -8,6 +8,8 @@ import { CompaniesModule } from './companies/companies.module';
 import { OffersModule } from './offers/offers.module';
 import { Offer } from './offers/entities/offer.entity';
 import { Company } from './companies/entities/company.entity';
+import { ApplyModule } from './apply/apply.module';
+import { Apply } from './apply/entities/apply.entity';
 
 @Module({
   imports: [  TypeOrmModule.forRoot({
@@ -17,9 +19,9 @@ import { Company } from './companies/entities/company.entity';
     username: 'root',
     password: 'root',
     database: 'test',
-    entities: [User, Offer,Company],
+    entities: [User, Offer,Company, Apply],
     synchronize: true,
-  }), UsersModule, CompaniesModule, OffersModule,
+  }), UsersModule, CompaniesModule, OffersModule, ApplyModule,
 ],
   controllers: [AppController],
   providers: [AppService],

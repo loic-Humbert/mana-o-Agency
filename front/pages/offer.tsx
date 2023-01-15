@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 export default function OfferTsx(props: any) {
     const [offerUseState, setOffer] = useState({
-        id : "",
+        id: "",
         companyName: "",
         offerName: "",
         city: "",
