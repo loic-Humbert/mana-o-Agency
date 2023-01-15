@@ -137,11 +137,19 @@ export default function FullOfferTsx(props: any) {
 
 export async function getStaticProps() {
     let offer;
-    await fetch(`http://localhost:3000/api/offers/1`).then((res) => res.json()).then((data) => {
-        offer = data
+    await fetch(`http://localhost:3000/api/offers/1`).then((res) => {
+        if (res) {
+            res.json()
+
+        }
+    }).then((data: any) => {
+        if (data) {
+            offer = data
+
+        }
         fetch('http://localhost:3000/api/offers/' + data.id, {
             method: 'PUT',
-        }).then((res) => res.json()).then((data) => {            
+        }).then((res) => res.json()).then((data) => {
         })
 
     })
