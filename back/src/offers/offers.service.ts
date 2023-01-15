@@ -20,9 +20,30 @@ export class OffersService {
   ) { }
 
 
-  async create(createOfferDto: CreateOfferDto) {
+  cityIsFound(cityClient, cityApi) {
+    let cityApiName = cityApi.map((city) => city.nom)
+    let result = cityApiName.filter(((apiCity) => apiCity === cityClient))
+    if (result) {
+      return true
+    } else {
+      return false
+    }
+
+  }
+
+
+  async create(createOfferDto: CreateOfferDto, cityApi) {
     createOfferDto.createdAt = new Date()
-    return this.offersRepository.save(createOfferDto)
+    createOfferDto.vue = 0
+
+    if (this.cityIsFound(createOfferDto.city, cityApi)) {
+      return this.offersRepository.save(createOfferDto)
+
+    }else {
+      return new HttpException('ville   introuvable', 404);
+
+    }
+
   }
 
   findAll() {
@@ -33,15 +54,15 @@ export class OffersService {
 
     })
   }
-  async addVue(id){
+  async addVue(id) {
     let offerModal = new Offer()
-    offerModal.id = id 
+    offerModal.id = id
     offerModal.vue = undefined
     let offerBdd = await this.offersRepository.findOneBy(offerModal)
 
-    if(!offerBdd){
+    if (!offerBdd) {
       return new HttpException('offer  introuvable', 404);
-    }else {
+    } else {
       offerModal = offerBdd
       offerModal.vue = offerBdd.vue + 1
       return this.offersRepository.save(offerModal)

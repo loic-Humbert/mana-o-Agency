@@ -15,4 +15,7 @@ export class CreateOfferDto {
 
     description: string
 
+    vue : number 
+
 }
+

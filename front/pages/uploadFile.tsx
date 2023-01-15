@@ -19,7 +19,7 @@ function FileUploadSingle() {
         }
 
         // 👇 Uploading the file using the fetch API to the server
-        fetch('http://localhost:3000/api/apply/1/upload/', {
+        fetch( process.env.API_URL +'/api/apply/1/upload/', {
             method: 'POST',
             body: file,
             // 👇 Set headers manually for single file upload

@@ -63,19 +63,7 @@ export default function FullOfferTsx(props: any) {
                 };
                 fetch('http://localhost:3000/api/apply/' + data.id, requestOptions)
                     .then(response => response.json())
-                // fetch('http://localhost:3000/api/apply/' + data.id, {
 
-                //     method: 'PUT',
-                //     body: JSON.stringify(dataUser)
-
-
-                // })
-                // .then((res: any) => {
-
-
-                // })
-                // .then((data) => console.log(data))
-                // .catch((err) => console.error(err));
             }
             );
 

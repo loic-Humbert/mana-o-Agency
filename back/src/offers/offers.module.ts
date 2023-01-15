@@ -10,7 +10,7 @@ import { FetchModule, FetchService } from 'nestjs-fetch';
 import { HttpModule, HttpService } from '@nestjs/axios/dist';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Offer]), forwardRef(() => OffersModule), ],
+  imports: [TypeOrmModule.forFeature([Offer]), forwardRef(() => OffersModule), HttpModule],
   controllers: [OffersController],
   providers: [OffersService],
   exports: [OffersService]
