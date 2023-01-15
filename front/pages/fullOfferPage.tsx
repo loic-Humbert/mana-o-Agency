@@ -160,7 +160,7 @@ export default function FullOfferTsx(props: any) {
 
                 </form>
                 <div className="modal-action">
-                    <label htmlFor="my-modal-5" onClick={postApply} className="btn">btn!</label>
+                    <label htmlFor="my-modal-5" onClick={postApply} className="btn">Valider</label>
                 </div>
             </div>
         </div>
