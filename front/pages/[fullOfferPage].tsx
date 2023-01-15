@@ -18,7 +18,6 @@ export default function FullOfferTsx(props: any) {
     })
     const router = useRouter()
 
-console.log(router.query.id);
 
 
     useEffect(() => {
@@ -33,7 +32,6 @@ console.log(router.query.id);
             })
     }, [])
 
-    console.log(props);
 
     // useEffect(() => setOffer(props.offer), [])
     return <>

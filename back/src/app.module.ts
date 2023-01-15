@@ -20,7 +20,7 @@ import { HttpModule, HttpService } from '@nestjs/axios/dist';
     port: 3306,
     username: 'root',
     password: 'root',
-    database: 'test',
+    database: 'manao',
     entities: [User, Offer,Company, Apply],
     synchronize: true,
   }), UsersModule, CompaniesModule, OffersModule, ApplyModule , HttpModule
