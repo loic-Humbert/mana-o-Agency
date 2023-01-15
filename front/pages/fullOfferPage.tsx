@@ -135,7 +135,7 @@ export default function FullOfferTsx(props: any) {
                     <p>Email : {props.offer.email} </p>
                     <div className="card-actions justify-end">
                         <div className="badge badge-outline">{props.offer.types}</div>
-                        <div className="badge badge-outline">Vues 10</div>
+                        <div className="badge badge-outline">Vues : {props.offer.vue + 1}</div>
                     </div>
                 </div>
                 <p className="text-center">Description</p>
@@ -151,7 +151,16 @@ export default function FullOfferTsx(props: any) {
 
 export async function getStaticProps() {
     let offer;
-    await fetch(`http://localhost:3000/api/offers/1`).then((res) => res.json()).then((data) => offer = data)
+    await fetch(`http://localhost:3000/api/offers/1`).then((res) => res.json()).then((data) => {
+        offer = data
+        fetch('http://localhost:3000/api/offers/' + data.id, {
+            method: 'PUT',
+        }).then((res) => res.json()).then((data) => {
+            console.log(data.vue );
+            
+        })
+
+    })
     return {
         props: {
             offer: offer

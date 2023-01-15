@@ -4,6 +4,8 @@ import Header from './header'
 import CreateAnnonce from './createAnnonce'
 import OffersList from './offers-list'
 import OfferTsx from './offer'
+import  '../styles/offer.css'
+
 
 
 

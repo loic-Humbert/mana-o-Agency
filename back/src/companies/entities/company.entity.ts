@@ -13,7 +13,5 @@ export class Company {
     @OneToMany(() => User, (user) => user.company, { cascade: true })
     user: User[];
 
-    @OneToMany(() => Offer, (offer) => offer.company, { cascade: true })
-    offer: Offer[];
 }
 

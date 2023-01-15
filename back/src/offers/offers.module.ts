@@ -6,12 +6,14 @@ import { User } from 'src/users/entities/user.entity';
 import { UsersModule } from 'src/users/users.module';
 import { UsersService } from 'src/users/users.service';
 import { Offer } from './entities/offer.entity';
+import { FetchModule, FetchService } from 'nestjs-fetch';
+import { HttpModule, HttpService } from '@nestjs/axios/dist';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Offer]), forwardRef(() =>  OffersModule)],
+  imports: [TypeOrmModule.forFeature([Offer]), forwardRef(() => OffersModule), ],
   controllers: [OffersController],
   providers: [OffersService],
-  exports : [OffersService]
+  exports: [OffersService]
 
 })
-export class OffersModule {}
+export class OffersModule { }
