@@ -3,16 +3,23 @@ import { OffersService } from './offers.service';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
 import { HttpService } from '@nestjs/axios/dist';
-import { AxiosResponse } from 'axios';
+import { Axios, AxiosResponse } from 'axios';
+import { Observable } from 'rxjs';
+import { get } from 'http';
 
 @Controller('offers')
 export class OffersController {
   constructor(private readonly offersService: OffersService,
+    private readonly httpService: HttpService
   ) { }
 
   @Post()
-  create(@Body() createOfferDto: CreateOfferDto) {
-    return this.offersService.create(createOfferDto);
+  async create(@Body() createOfferDto: CreateOfferDto) {
+     await this.httpService.get('http://geo.api.gouv.fr/departements/987/communes').subscribe((res) => {
+       return this.offersService.create(createOfferDto,res.data );
+      
+      
+    })
   }
 
   @Get()
@@ -24,14 +31,16 @@ export class OffersController {
   addVue(@Param('id') id: number) {
     return this.offersService.addVue(id);
   }
-  
 
+  @Get("/test")
+  async findAlll(): Promise<any> {
+    
+
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.offersService.findOne(+id);
   }
-
-
 
 
   @Patch(':id')

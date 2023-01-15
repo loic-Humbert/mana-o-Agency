@@ -5,7 +5,6 @@ import { Entity, ManyToOne, PrimaryGeneratedColumn, Column, OneToMany, CreateDat
 @Entity()
 export class Offer {
 
-
     @PrimaryGeneratedColumn()
     id: number
 

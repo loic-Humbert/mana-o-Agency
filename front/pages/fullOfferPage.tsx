@@ -13,13 +13,11 @@ export default function FullOfferTsx(props: any) {
     function handleFileChange(e: any) {
 
         if (e.target.files) {
-            console.log(e.target.files);
             const formData: FormData = new FormData();
             formData.append("file", e.target.files[0]);
 
             setFile(formData);
             let test = JSON.stringify(Object.fromEntries(formData));
-            console.log(test);
         }
     };
 
@@ -63,19 +61,7 @@ export default function FullOfferTsx(props: any) {
                 };
                 fetch('http://localhost:3000/api/apply/' + data.id, requestOptions)
                     .then(response => response.json())
-                // fetch('http://localhost:3000/api/apply/' + data.id, {
 
-                //     method: 'PUT',
-                //     body: JSON.stringify(dataUser)
-
-
-                // })
-                // .then((res: any) => {
-
-
-                // })
-                // .then((data) => console.log(data))
-                // .catch((err) => console.error(err));
             }
             );
 
@@ -155,9 +141,7 @@ export async function getStaticProps() {
         offer = data
         fetch('http://localhost:3000/api/offers/' + data.id, {
             method: 'PUT',
-        }).then((res) => res.json()).then((data) => {
-            console.log(data.vue );
-            
+        }).then((res) => res.json()).then((data) => {            
         })
 
     })

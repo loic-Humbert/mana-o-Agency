@@ -1,3 +1,4 @@
+import { env } from "process";
 import OfferTsx from "./offer";
 
 export default function OffersList(props: any) {
@@ -41,7 +42,7 @@ export default function OffersList(props: any) {
 
 export async function getStaticProps() {
     let offers;
-    await fetch(`http://localhost:3000/api/offers`).then((res) => res.json()).then((data) => offers = data)
+    await fetch(process.env.API_URL +      `/api/offers`).then((res) => res.json()).then((data) => offers = data)
     return {
         props: {
             offers: offers

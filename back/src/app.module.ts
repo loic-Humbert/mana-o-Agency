@@ -11,7 +11,7 @@ import { Company } from './companies/entities/company.entity';
 import { ApplyModule } from './apply/apply.module';
 import { Apply } from './apply/entities/apply.entity';
 import { FetchModule } from 'nestjs-fetch';
-import { HttpService } from '@nestjs/axios/dist';
+import { HttpModule, HttpService } from '@nestjs/axios/dist';
 
 @Module({
   imports: [  TypeOrmModule.forRoot({
@@ -20,10 +20,10 @@ import { HttpService } from '@nestjs/axios/dist';
     port: 3306,
     username: 'root',
     password: 'root',
-    database: 'test',
+    database: 'manao',
     entities: [User, Offer,Company, Apply],
     synchronize: true,
-  }), UsersModule, CompaniesModule, OffersModule, ApplyModule 
+  }), UsersModule, CompaniesModule, OffersModule, ApplyModule , HttpModule
 ],
   controllers: [AppController],
   providers: [AppService],

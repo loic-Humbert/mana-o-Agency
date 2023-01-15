@@ -18,13 +18,12 @@ export default function FullOfferTsx(props: any) {
     })
     const router = useRouter()
 
-console.log(router.query.id);
 
 
     useEffect(() => {
         setLoading(true)
 
-        fetch('http://localhost:3000/api/offers/' + router.query.id)
+        fetch(process.env.API_URL +'/api/offers/' + router.query.id)
             .then((res) => res.json())
             .then((data) => {
                 setOffer(data)
@@ -33,7 +32,6 @@ console.log(router.query.id);
             })
     }, [])
 
-    console.log(props);
 
     // useEffect(() => setOffer(props.offer), [])
     return <>

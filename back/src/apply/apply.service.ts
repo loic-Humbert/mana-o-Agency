@@ -46,12 +46,12 @@ export class ApplyService {
     return `This action returns a #${id} apply`;
   }
 
-  async update(id: number,lastName, firstName, email) {
+  async update(id: number,createApplyDto) {
     const apply = await this.offersRepository.findOneBy({ id });
     let applyModel = new Apply()
-    applyModel.email = email
-    applyModel.firstName = firstName
-    applyModel.lastName = lastName
+    applyModel.email = createApplyDto.email
+    applyModel.firstName = createApplyDto.firstName
+    applyModel.lastName = createApplyDto.lastName
     applyModel.file = apply.file
     applyModel.id = id
 

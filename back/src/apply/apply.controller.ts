@@ -14,7 +14,6 @@ import { UpdateApplyDto } from './dto/update-apply.dto';
 @Controller('apply')
 export class ApplyController {
   constructor(private readonly applyService: ApplyService) { }
-  SERVER_URL: string = "http://localhost:3000/";
 
   @Post(':offerId/upload')
   @UseInterceptors(FileInterceptor('file',
@@ -30,8 +29,8 @@ export class ApplyController {
     }
   )
   )
-  uploadCv(@Param('offerId') offerId : number ,   @Body() createApplyDto: CreateApplyDto, @UploadedFile() file) {
-    return this.applyService.create(offerId  , createApplyDto, `http://localhost:3000/` + file.path)
+  uploadCv(@Param('offerId') offerId: number, @Body() createApplyDto: CreateApplyDto, @UploadedFile() file) {
+    return this.applyService.create(offerId, createApplyDto, `http://localhost:3000/` + file.path)
   }
 
 
@@ -46,8 +45,8 @@ export class ApplyController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body("lastName") lastName: string,@Body("firstName") firstName: string, @Body("email") email: string) {
-    return this.applyService.update(+id, lastName, firstName, email);
+  update(@Param('id') id: string, @Body() createApplyDto: CreateApplyDto,) {
+    return this.applyService.update(+id, createApplyDto);
   }
 
   @Delete(':id')
