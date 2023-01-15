@@ -1,0 +1,24 @@
+
+table tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+table tr {
+    background-color: #ddd;
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+}
+
+td:first-child,
+th:first-child {
+    border-radius: 40px 0 0 40px;
+}
+
+td:last-child,
+th:last-child {
+    border-radius: 0 40px 40px 0;
+}

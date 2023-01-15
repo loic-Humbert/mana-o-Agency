@@ -1,12 +1,21 @@
 import { Apply } from "src/apply/entities/apply.entity";
-import {  Company } from "src/companies/entities/company.entity";
-import { Entity, ManyToOne, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Company } from "src/companies/entities/company.entity";
+import { Entity, ManyToOne, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from "typeorm";
 
 @Entity()
 export class Offer {
 
+
     @PrimaryGeneratedColumn()
     id: number
+
+    @CreateDateColumn({ type: 'timestamp' })
+    createdAt: Date;
+
+
+    @Column()
+    vue : number = 0
+
 
     @Column()
     companyName: string
@@ -29,12 +38,10 @@ export class Offer {
     types: string
 
 
-    @ManyToOne(() => Company, (company) => company.offer, { onDelete: 'CASCADE', onUpdate: 'CASCADE', orphanedRowAction: 'delete', nullable: true })
-    company: Company;
 
     @OneToMany(() => Apply, (apply) => apply.offer, { cascade: true })
     apply: Apply[];
-  
+
 
 
 

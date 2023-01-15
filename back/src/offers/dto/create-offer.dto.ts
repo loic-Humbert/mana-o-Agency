@@ -1,6 +1,8 @@
 export class CreateOfferDto {
     id: number
 
+    createdAt : Date
+
     companyName: string
 
     email: string

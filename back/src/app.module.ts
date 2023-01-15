@@ -10,6 +10,8 @@ import { Offer } from './offers/entities/offer.entity';
 import { Company } from './companies/entities/company.entity';
 import { ApplyModule } from './apply/apply.module';
 import { Apply } from './apply/entities/apply.entity';
+import { FetchModule } from 'nestjs-fetch';
+import { HttpService } from '@nestjs/axios/dist';
 
 @Module({
   imports: [  TypeOrmModule.forRoot({
@@ -21,7 +23,7 @@ import { Apply } from './apply/entities/apply.entity';
     database: 'test',
     entities: [User, Offer,Company, Apply],
     synchronize: true,
-  }), UsersModule, CompaniesModule, OffersModule, ApplyModule,
+  }), UsersModule, CompaniesModule, OffersModule, ApplyModule 
 ],
   controllers: [AppController],
   providers: [AppService],
