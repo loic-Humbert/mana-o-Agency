@@ -30,7 +30,7 @@ export class Offer {
     @Column()
     city: string
 
-    @Column()
+    @Column( {type: 'longtext'})
     description: string
 
     @Column()

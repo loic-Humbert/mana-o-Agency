@@ -8,6 +8,8 @@ import OffersList from './offers-list'
 const Home: NextPage = () => {
   return (
     <div>
+      <OffersList></OffersList>
+
     </div>
   )
 }
