@@ -9,7 +9,7 @@ const Header: NextPage = () => {
             <div className='flex justify-between mx-20 '>
                 <div className='flex content-center'>
                     <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c0/Logo_P%C3%B4le_Emploi_2008.svg/600px-Logo_P%C3%B4le_Emploi_2008.svg.png" className='h-10  table-cell align-middle' />
-                    <p className='mt-3 ml-6 '>Nom de l'entreprise</p>
+                    <p className='mt-3 ml-6 '>Mana'o Agency</p>
                 </div>
                 <div className='flex content-center'>
                     <div className='mt-1'>

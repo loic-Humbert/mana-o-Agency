@@ -2,7 +2,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Header from './header'
 import CreateAnnonce from './createAnnonce'
-import offersList from './offers-list'
+import OffersList from './offers-list'
 import OfferTsx from './offer'
 
 
